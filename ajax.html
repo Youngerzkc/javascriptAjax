@@ -1,0 +1,85 @@
+AJAX学习教程
+AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。
+AJAX 不是新的编程语言，而是一种使用现有标准的新方法。
+AJAX 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下。
+
+1.创建XMLHttpRequest 对象 --->用于和服务器交换数据。
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  2.如需将请求发送到服务器，我们使用 XMLHttpRequest 对象的 open() 和 send() 方法：
+  请记住，JavaScript 会等到服务器响应就绪才继续执行。如果服务器繁忙或缓慢，应用程序会挂起或停止。
+
+  注释：当您使用 async=false 时，请不要编写 onreadystatechange 函数 - 把代码放到 send() 语句后面即可：
+<html>
+
+<head>
+    <script type="text/javascript">
+        function loadXMLDoc() {
+            var xmlhttp;
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            // open的参数为 true
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+                }
+            }
+            xmlhttp.open("GET", "/ajax/test1.txt", true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="myDiv">
+        <h2>Let AJAX change this text</h2>
+    </div>
+    <button type="button" onclick="loadXMLDoc()">通过 AJAX 改变内容</button>
+
+</body>
+
+</html>
+<!--++++++++++++++++++++++++++++++++++++++++++++++-->
+<!--注意true和false的区别呀-->
+<html>
+<head>
+    <script type="text/javascript">
+        function loadXMLDoc() {
+            var xmlhttp;
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {// code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            //open的参数为false。
+            xmlhttp.open("GET", "/ajax/test1.txt", false);
+            xmlhttp.send();
+            document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div id="myDiv">
+        <h2>Let AJAX change this text</h2>
+    </div>
+    <button type="button" onclick="loadXMLDoc()">通过 AJAX 改变内容</button>
+
+</body>
+
+</html>
